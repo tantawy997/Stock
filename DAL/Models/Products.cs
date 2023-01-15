@@ -2,27 +2,26 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Stock.Models
+namespace Stock.Models;
+
+public class Products
 {
-    public class Products
-    {
-        [Key]
-        public Guid Id { get; set; }
+    [Key]
+    public Guid Id { get; set; }
 
-        [Required]
-        
-        public string name { get; set; } = "";
+    [Required]
+    
+    public string name { get; set; } = "";
 
-        public string photo { get; set; } = "";
+    public string photo { get; set; } = "";
 
-        public string description { get; set; } = "";
-        [Required]
-        public string type { get; set; } = "out of stock";
+    public string description { get; set; } = "";
+    [Required]
+    public string type { get; set; } = "out of stock";
 
-        //[InverseProperty("Products")]
+    //[InverseProperty("Products")]
 
-        public  ICollection<ProductDetails> ProductDetails { get; set; } = new HashSet<ProductDetails>();
-        public  ICollection<Catalog> Catalogs { get; set; } = new HashSet<Catalog>();
+    public  ICollection<ProductDetails> ProductDetails { get; set; } = new HashSet<ProductDetails>();
+    public  ICollection<Catalog> Catalogs { get; set; } = new HashSet<Catalog>();
 
-    }   
-}
+}   

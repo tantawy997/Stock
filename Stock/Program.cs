@@ -6,13 +6,21 @@ using DAL.repos.ProductRepo;
 using Stock.Models;
 using BL.ProductsManager;
 
+#pragma warning disable CS0618
+
 internal class Program
 {
+
     private static void Main(string[] args)
     {
+        //var AllowAll = "AllowAll";
+
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
+        //builder.Services.AddApplicationServices(builder.Configuration);
+
+
         var co1 = builder.Configuration.GetConnectionString("co1");
         builder.Services.AddDbContext<AppdbContext>(a => a.UseSqlServer(co1));
 
@@ -26,11 +34,15 @@ internal class Program
 
         builder.Services.AddCors(options =>
         {
-            options.AddPolicy("CorsPolicy", builder =>
-                builder
-                .AllowAnyOrigin()
-               .AllowAnyMethod()
-               .AllowAnyHeader());
+            options.AddPolicy("AllowAll",
+                policyBuilder =>
+                {
+                    policyBuilder
+
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                });
         });
 
         builder.Services.AddScoped<IProductsRepo, ProductsRepo>();
@@ -44,7 +56,7 @@ internal class Program
             app.UseSwagger();
             app.UseSwaggerUI();
         }
-        app.UseCors("CorsPolicy");
+        app.UseCors("AllowAll");
 
         app.UseHttpsRedirection();
 

@@ -15,6 +15,8 @@ public interface IProductsManager
 
     ProductsDTO AddProduct(ProductAddDTOs product);
 
+    ProductsDTO AddProd(ProductAddDTOs product);
+
     bool update(ProductsDTO product);   
 
     void Delete(Guid id);

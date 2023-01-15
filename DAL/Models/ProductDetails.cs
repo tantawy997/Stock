@@ -11,8 +11,7 @@ namespace DAL.Models
 {
     public class ProductDetails
     {
-        [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [MaxLength(50)]
         public string DefualtStock { get; set; } = "";
@@ -22,7 +21,7 @@ namespace DAL.Models
 
         public float PurchasePrice { get; set; }
 
-
+        [NotMapped]
         public Products Products { get; set; } = new Products();
     }
 }

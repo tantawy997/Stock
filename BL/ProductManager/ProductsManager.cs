@@ -20,8 +20,16 @@ public class ProductsManager : IProductsManager
         Mapper = _mapper;
         productRepo = _ProductRepo;
 
-    }    
+    }
 
+    public ProductsDTO AddProd(ProductAddDTOs Product)
+    {
+        var pr = Mapper.Map<Products>(Product);
+        pr.Id = Guid.NewGuid();
+        productRepo.AddEntity(pr);
+
+        return Mapper.Map<ProductsDTO>(pr);
+    }
     public ProductsDTO AddProduct(ProductAddDTOs product)
     {
        var ProductToAdd =  Mapper.Map<Products>(product);

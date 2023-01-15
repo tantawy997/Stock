@@ -51,22 +51,37 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Catalogs");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("0f8203f3-8717-4cdf-bf1f-588fbc13971d"),
+                            Name = "John"
+                        },
+                        new
+                        {
+                            Id = new Guid("1fc5acb3-fcd0-45f2-b3ea-62e006eeab0c"),
+                            Name = "James"
+                        },
+                        new
+                        {
+                            Id = new Guid("27880c8b-a53e-411b-a29b-328bf56905c2"),
+                            Name = "Anderson"
+                        });
                 });
 
             modelBuilder.Entity("DAL.Models.ProductDetails", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("DefualtStock")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<Guid>("ProductsId")
+                    b.Property<Guid?>("ProductsId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<float>("PurchasePrice")
@@ -110,6 +125,32 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("6c55a09c-bcc3-488d-9814-b43fc445dc1d"),
+                            description = "",
+                            name = "Cold",
+                            photo = "",
+                            type = "out of stock"
+                        },
+                        new
+                        {
+                            Id = new Guid("3cf3091e-485a-40b6-b4fd-b4ea2d730d63"),
+                            description = "",
+                            name = "Stress",
+                            photo = "",
+                            type = "out of stock"
+                        },
+                        new
+                        {
+                            Id = new Guid("83dff502-7c7d-4f27-83ed-d2eb25cbb3c6"),
+                            description = "",
+                            name = "Headache",
+                            photo = "",
+                            type = "out of stock"
+                        });
                 });
 
             modelBuilder.Entity("CatalogProducts", b =>
@@ -129,13 +170,9 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Models.ProductDetails", b =>
                 {
-                    b.HasOne("Stock.Models.Products", "Products")
+                    b.HasOne("Stock.Models.Products", null)
                         .WithMany("ProductDetails")
-                        .HasForeignKey("ProductsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Products");
+                        .HasForeignKey("ProductsId");
                 });
 
             modelBuilder.Entity("Stock.Models.Products", b =>

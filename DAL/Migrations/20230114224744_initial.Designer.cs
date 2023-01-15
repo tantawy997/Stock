@@ -12,8 +12,8 @@ using Stock.Context;
 namespace DAL.Migrations
 {
     [DbContext(typeof(AppdbContext))]
-    [Migration("20230114214218_notMapped")]
-    partial class notMapped
+    [Migration("20230114224744_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,21 @@ namespace DAL.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("CatalogProducts", b =>
+                {
+                    b.Property<Guid>("CatalogsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("CatalogsId", "ProductsId");
+
+                    b.HasIndex("ProductsId");
+
+                    b.ToTable("CatalogProducts");
+                });
 
             modelBuilder.Entity("DAL.Models.Catalog", b =>
                 {
@@ -38,22 +53,37 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Catalogs");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("8a4c6d84-2dc3-4477-855b-51ccb581db27"),
+                            Name = "John"
+                        },
+                        new
+                        {
+                            Id = new Guid("7b9beb8e-d7b3-4f1a-bf23-88ecab2ebb4d"),
+                            Name = "James"
+                        },
+                        new
+                        {
+                            Id = new Guid("9368eaf9-5ed7-480d-807f-cc229b4b8c35"),
+                            Name = "Anderson"
+                        });
                 });
 
             modelBuilder.Entity("DAL.Models.ProductDetails", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("DefualtStock")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<Guid>("ProductsId")
+                    b.Property<Guid?>("ProductsId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<float>("PurchasePrice")
@@ -73,9 +103,6 @@ namespace DAL.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("CatalogId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("description")
@@ -99,32 +126,60 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CatalogId");
-
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("26d8877a-85ea-45da-8322-dfceeffee12f"),
+                            description = "",
+                            name = "Cold",
+                            photo = "",
+                            type = "out of stock"
+                        },
+                        new
+                        {
+                            Id = new Guid("ee1f2eb0-7f69-4738-acfc-ab19a5244c5f"),
+                            description = "",
+                            name = "Stress",
+                            photo = "",
+                            type = "out of stock"
+                        },
+                        new
+                        {
+                            Id = new Guid("37923fe5-c699-4ce6-83bc-2e6ac9890c04"),
+                            description = "",
+                            name = "Headache",
+                            photo = "",
+                            type = "out of stock"
+                        });
                 });
 
-            modelBuilder.Entity("DAL.Models.ProductDetails", b =>
+            modelBuilder.Entity("CatalogProducts", b =>
                 {
-                    b.HasOne("Stock.Models.Products", "Products")
+                    b.HasOne("DAL.Models.Catalog", null)
+                        .WithMany()
+                        .HasForeignKey("CatalogsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Stock.Models.Products", null)
                         .WithMany()
                         .HasForeignKey("ProductsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
 
-                    b.Navigation("Products");
+            modelBuilder.Entity("DAL.Models.ProductDetails", b =>
+                {
+                    b.HasOne("Stock.Models.Products", null)
+                        .WithMany("ProductDetails")
+                        .HasForeignKey("ProductsId");
                 });
 
             modelBuilder.Entity("Stock.Models.Products", b =>
                 {
-                    b.HasOne("DAL.Models.Catalog", null)
-                        .WithMany("Products")
-                        .HasForeignKey("CatalogId");
-                });
-
-            modelBuilder.Entity("DAL.Models.Catalog", b =>
-                {
-                    b.Navigation("Products");
+                    b.Navigation("ProductDetails");
                 });
 #pragma warning restore 612, 618
         }

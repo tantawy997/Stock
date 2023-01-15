@@ -5,19 +5,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL.DTOs
+namespace BL.DTOs;
+
+public class ProductDetailsDTO
 {
-    public class ProductDetailsDTO
-    {
-        public int Id { get; set; }
+    public int Id { get; set; }
 
-        public string DefualtStock { get; set; } = "";
+    public string DefualtStock { get; set; } = "";
 
-        public float SalesPrice { get; set; }
+    public float SalesPrice { get; set; }
 
-        public float PurchasePrice { get; set; }
+    public float PurchasePrice { get; set; }
 
-        public Guid ProductId { get; set;}
+    public Guid ProductId { get; set;}
 
-    }
 }

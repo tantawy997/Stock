@@ -5,12 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL.DTOs
-{
-    public class CatlogDTO
-    {
-        public Guid Id { get; set; }
+namespace BL.DTOs;
 
-        public string Name { get; set; } = "";
-    }
+public class CatlogDTO
+{
+    public Guid Id { get; set; }
+
+    public string Name { get; set; } = "";
 }

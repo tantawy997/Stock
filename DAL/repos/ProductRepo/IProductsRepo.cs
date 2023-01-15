@@ -6,10 +6,9 @@ using System.Linq;
 using System.Text;
 
 using System.Threading.Tasks;
-namespace DAL.repos.ProductRepo
-{
-    public interface IProductsRepo : IGenricRepo<Products>
-    {
+namespace DAL.repos.ProductRepo;
 
-    }
+public interface IProductsRepo : IGenricRepo<Products>
+{
+
 }

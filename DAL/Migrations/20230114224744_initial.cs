@@ -64,12 +64,11 @@ namespace DAL.Migrations
                 name: "ProductDetails",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DefualtStock = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     SalesPrice = table.Column<float>(type: "real", nullable: false),
                     PurchasePrice = table.Column<float>(type: "real", nullable: false),
-                    ProductsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    ProductsId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -78,8 +77,27 @@ namespace DAL.Migrations
                         name: "FK_ProductDetails_Products_ProductsId",
                         column: x => x.ProductsId,
                         principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.InsertData(
+                table: "Catalogs",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { new Guid("7b9beb8e-d7b3-4f1a-bf23-88ecab2ebb4d"), "James" },
+                    { new Guid("8a4c6d84-2dc3-4477-855b-51ccb581db27"), "John" },
+                    { new Guid("9368eaf9-5ed7-480d-807f-cc229b4b8c35"), "Anderson" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Products",
+                columns: new[] { "Id", "description", "name", "photo", "type" },
+                values: new object[,]
+                {
+                    { new Guid("26d8877a-85ea-45da-8322-dfceeffee12f"), "", "Cold", "", "out of stock" },
+                    { new Guid("37923fe5-c699-4ce6-83bc-2e6ac9890c04"), "", "Headache", "", "out of stock" },
+                    { new Guid("ee1f2eb0-7f69-4738-acfc-ab19a5244c5f"), "", "Stress", "", "out of stock" }
                 });
 
             migrationBuilder.CreateIndex(

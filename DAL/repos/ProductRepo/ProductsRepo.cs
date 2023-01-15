@@ -7,16 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL.repos.ProductRepo
+namespace DAL.repos.ProductRepo;
+
+
+public class ProductsRepo : GenricRepo<Products>, IProductsRepo
 {
+    private readonly AppdbContext context;
 
-    public class ProductsRepo : GenricRepo<Products>, IProductsRepo
+    public ProductsRepo(AppdbContext _context) : base(_context)
     {
-        private readonly AppdbContext context;
-
-        public ProductsRepo(AppdbContext _context) : base(_context)
-        {
-            context = _context;
-        }
+        context = _context;
     }
 }

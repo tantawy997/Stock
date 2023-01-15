@@ -1,5 +1,6 @@
 ﻿using BL.DTOs.Product;
 using BL.ProductsManager;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Stock.Models;
@@ -8,6 +9,7 @@ namespace Stock.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
     public class ProductsController : ControllerBase
     {
         private readonly IProductsManager Context;
@@ -35,14 +37,14 @@ namespace Stock.Controllers
             return Ok(row);
         }
 
-        [HttpPost]
-        public ActionResult<Products> AddProduct(ProductAddDTOs product)
-        {
-            var row = Context.AddProduct(product);
+        //[HttpPost]
+        //public ActionResult<Products> AddProduct(ProductAddDTOs product)
+        //{
+        //    var row = Context.AddProduct(product);
             
-            return CreatedAtAction("GetProduct", new {id = row.id}, row);
+        //    return Ok(row);
 
-        }
+        //}
 
         [HttpPut("{id}")]
         public ActionResult<ProductsDTO> UpdateProduct(ProductsDTO product) 
@@ -51,17 +53,26 @@ namespace Stock.Controllers
             return Ok(Context.update(product));
         }
         [HttpDelete("{id}")]
-        public IActionResult DeleteProduct(ProductsDTO product)
+        public IActionResult DeleteProduct(Guid id)
         {
-            var Row = Context.Get(product.id);
+            var RowID = Context.Get(id);
 
-            if (Row == null)
+            if (RowID == null)
             {
                 return NotFound();
             }
-             Context.Delete(product.id);
+             Context.Delete(id);
 
             return Ok();
+        }
+
+        [HttpPost]
+        public ActionResult<ProductsDTO> AddProductTwo(ProductAddDTOs products)
+        {
+            var row = Context.AddProduct(products);
+
+            return Ok(new {id = row.id,name = row.name, photo = row.photo,
+                description = row.description, type = row.type});
         }
     }
 }
