@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BL.DTOs.Catalog;
 
-internal class CatalogAddDTOs
+public class CatalogAddDTOs
 {
     public string name { get; set; } = string.Empty; 
 }

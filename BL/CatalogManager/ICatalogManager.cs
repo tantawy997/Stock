@@ -1,23 +1,23 @@
 ﻿using BL.DTOs.Catalog;
+using DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL.CatalogManager
+namespace BL.CatalogManager;
+
+public interface ICatalogManager 
 {
-    internal interface ICatalogManager 
-    {
-        List<CatalogDTO> GetAllCatalog(CatalogDTO catalog);
+    List<CatalogDTO> GetAllCatalog();
 
-        CatalogDTO GetCatalog(Guid id);
+    CatalogDTO GetCatalog(Guid id);
 
-        void DeleteByID(Guid id);
+    void DeleteByID(Guid id);
 
-        void UpdateCatalog(CatalogDTO catalog);
+    bool UpdateCatalog(CatalogDTO catalog);
 
-        CatalogDTO AddCatalog(CatalogAddDTOs catalog);
+    CatalogDTO AddCatalog(CatalogAddDTOs catalog);
 
-    }
 }

@@ -79,10 +79,13 @@ public class ProductsManager : IProductsManager
             return false;
 
         }
+
         //Mapper.Map<ProductsDTO>(productbyID);
 
         var prdToUpdate = Mapper.Map<ProductsDTO,Products>(product);
         productRepo.Update(productbyID);
+        //productRepo.Update(prdToUpdate);
+
         productRepo.saveChange();
 
         return true;

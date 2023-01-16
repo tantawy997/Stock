@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using BL.DTOs.Product;
+using DAL.Models;
+using BL.DTOs.Catalog;
 
 namespace BL.AutoMapperProfile;
 
@@ -19,5 +21,7 @@ public class AutoMapping : Profile
         CreateMap<ProductAddDTOs, Products>().ReverseMap();
 
         CreateMap<Products, ProductsDTO>().ReverseMap();
+
+        CreateMap<Catalog, CatalogDTO>().ReverseMap();
     }    
 }
