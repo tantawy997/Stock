@@ -13,13 +13,11 @@ public class AutoMapping : Profile
 {
     public AutoMapping() 
     {
-        CreateMap<Products, ProductsDTO>().PreserveReferences();
-        CreateMap<ProductsDTO, Products>().PreserveReferences();
+        CreateMap<Products, ProductsDTO>().ReverseMap();
+        //CreateMap<ProductsDTO, Products>();
 
-        CreateMap<ProductAddDTOs, Products>().PreserveReferences();
-        CreateMap<Products, ProductsDTO>().PreserveReferences();
+        CreateMap<ProductAddDTOs, Products>().ReverseMap();
 
-        CreateMap<Products, ProductAddDTOs>().PreserveReferences();
-
+        CreateMap<Products, ProductsDTO>().ReverseMap();
     }    
 }

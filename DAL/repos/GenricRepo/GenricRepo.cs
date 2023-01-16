@@ -51,9 +51,9 @@ public class GenricRepo<TEntity> : IGenricRepo<TEntity> where TEntity : class
         return context.Set<TEntity>().Find(id);
     }
 
-    public void saveChanges()
+    public void saveChange()
     {
-        saveChanges();
+        context.SaveChanges();
     }
 
     public void Update(TEntity entity)

@@ -25,20 +25,22 @@ public class ProductsManager : IProductsManager
     public ProductsDTO AddProd(ProductAddDTOs Product)
     {
         var pr = Mapper.Map<Products>(Product);
+        
         pr.Id = Guid.NewGuid();
         productRepo.AddEntity(pr);
-
+        productRepo.saveChange();
         return Mapper.Map<ProductsDTO>(pr);
+
     }
     public ProductsDTO AddProduct(ProductAddDTOs product)
     {
-       var ProductToAdd =  Mapper.Map<Products>(product);
+       var ProductToAdd =  Mapper.Map<ProductAddDTOs, Products>(product);
         ProductToAdd.Id = Guid.NewGuid();
         productRepo.AddEntity(ProductToAdd);
 
-        productRepo.saveChanges();
+        productRepo.saveChange();
 
-        return Mapper.Map<ProductsDTO>(ProductToAdd);
+        return Mapper.Map<Products,ProductsDTO>(ProductToAdd);
 
 
     }
@@ -48,7 +50,7 @@ public class ProductsManager : IProductsManager
 
         productRepo.DeleteById(id);
 
-        productRepo.saveChanges();
+        productRepo.saveChange();
     }
 
     public ProductsDTO? Get(Guid id)
@@ -72,19 +74,17 @@ public class ProductsManager : IProductsManager
     {
         var productbyID = productRepo.getById(product.id);
 
-        if(productbyID != null)
-        {
-            Mapper.Map<ProductsDTO>(productbyID);
-            productRepo.Update(productbyID);
-            productRepo.saveChanges();
-
-            return true;
-
-        }
-
-        else
+        if(productbyID == null)
         {
             return false;
+
         }
+        //Mapper.Map<ProductsDTO>(productbyID);
+
+        var prdToUpdate = Mapper.Map<ProductsDTO,Products>(product);
+        productRepo.Update(productbyID);
+        productRepo.saveChange();
+
+        return true;
     }
 }

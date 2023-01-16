@@ -20,6 +20,6 @@ public interface IGenricRepo<TEntity> where TEntity : class
 
     void DeleteById(Guid id);
 
-    void saveChanges();
+    void saveChange();
 
 }

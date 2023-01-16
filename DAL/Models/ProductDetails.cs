@@ -11,6 +11,7 @@ namespace DAL.Models
 {
     public class ProductDetails
     {
+
         public Guid Id { get; set; }
 
         [MaxLength(50)]

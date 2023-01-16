@@ -21,5 +21,6 @@ public interface IProductsManager
 
     void Delete(Guid id);
 
+    //void SaveChanges();
 
 }

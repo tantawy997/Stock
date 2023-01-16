@@ -18,4 +18,9 @@ public class ProductsRepo : GenricRepo<Products>, IProductsRepo
     {
         context = _context;
     }
+
+    //public List<Products> GetProductsWithCatalogs()
+    //{
+    //    return context.Products.ToList();
+    //}
 }

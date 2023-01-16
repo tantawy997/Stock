@@ -37,14 +37,6 @@ namespace Stock.Controllers
             return Ok(row);
         }
 
-        //[HttpPost]
-        //public ActionResult<Products> AddProduct(ProductAddDTOs product)
-        //{
-        //    var row = Context.AddProduct(product);
-            
-        //    return Ok(row);
-
-        //}
 
         [HttpPut("{id}")]
         public ActionResult<ProductsDTO> UpdateProduct(ProductsDTO product) 
@@ -69,7 +61,8 @@ namespace Stock.Controllers
         [HttpPost]
         public ActionResult<ProductsDTO> AddProductTwo(ProductAddDTOs products)
         {
-            var row = Context.AddProduct(products);
+            var row = Context.AddProd(products);
+            
 
             return Ok(new {id = row.id,name = row.name, photo = row.photo,
                 description = row.description, type = row.type});

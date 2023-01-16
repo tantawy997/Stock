@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Stock.Context;
 
@@ -11,9 +12,10 @@ using Stock.Context;
 namespace DAL.Migrations
 {
     [DbContext(typeof(AppdbContext))]
-    partial class AppdbContextModelSnapshot : ModelSnapshot
+    [Migration("20230116005922_productDetailsForeignKey")]
+    partial class productDetailsForeignKey
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +36,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("ProductsId");
 
-                    b.ToTable("CatalogProducts", (string)null);
+                    b.ToTable("CatalogProducts");
                 });
 
             modelBuilder.Entity("DAL.Models.Catalog", b =>
@@ -50,7 +52,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Catalogs", (string)null);
+                    b.ToTable("Catalogs");
                 });
 
             modelBuilder.Entity("DAL.Models.ProductDetails", b =>
@@ -71,7 +73,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProductDetails", (string)null);
+                    b.ToTable("ProductDetails");
                 });
 
             modelBuilder.Entity("Stock.Models.Products", b =>
@@ -101,7 +103,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("CatalogProducts", b =>

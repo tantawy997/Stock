@@ -22,20 +22,14 @@ public class AppdbContext : DbContext
         ModelBuilder.Entity<Products>().Property("description").HasMaxLength(225);
         ModelBuilder.Entity<Products>().Property("type").HasMaxLength(100);
 
-        ModelBuilder.Entity<Products>().HasData(
-            new Products { Id = Guid.NewGuid(), name = "Cold" },
-            new Products { Id = Guid.NewGuid(), name = "Stress" },
-            new Products { Id = Guid.NewGuid(), name = "Headache" }
-            );
 
 
-        #region Seeding Patients
-            ModelBuilder.Entity<Catalog>().HasData(
-            new Catalog { Id = Guid.NewGuid(), Name = "John" },
-            new Catalog { Id = Guid.NewGuid(), Name = "James" },
-            new Catalog { Id = Guid.NewGuid(), Name = "Anderson" }
-            );
+        //ModelBuilder.Entity<ProductDetails>().Property(a => a.Products).IsRequired();
 
-        #endregion
+        //ModelBuilder.Entity<Products>().HasOne(sp => sp.ProductDetails);
+        //ModelBuilder.Entity<ProductDetails>().HasKey(a => a.)
+
+        ModelBuilder.Entity<ProductDetails>().HasOne(a => a.Products).WithMany(e =>e.ProductDetails)
+            .HasPrincipalKey(f => f.Id).HasForeignKey(a => a.Id);
     }
 }
