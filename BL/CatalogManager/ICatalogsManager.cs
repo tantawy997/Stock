@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BL.CatalogManager;
 
-public interface ICatalogManager 
+public interface ICatalogsManager 
 {
     List<CatalogDTO> GetAllCatalog();
 

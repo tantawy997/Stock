@@ -8,6 +8,6 @@ using System.Threading.Tasks;
 
 namespace DAL.repos.CatalogRepo;
 
-public interface ICatalogRepo : IGenricRepo<Catalog>
+public interface ICatalogsRepo : IGenricRepo<Catalog>
 {
 }

@@ -5,6 +5,8 @@ using BL.AutoMapperProfile;
 using DAL.repos.ProductRepo;
 using Stock.Models;
 using BL.ProductsManager;
+using DAL.repos.CatalogRepo;
+using BL.CatalogManager;
 
 #pragma warning disable CS0618
 
@@ -44,9 +46,12 @@ internal class Program
                         .AllowAnyHeader();
                 });
         });
+        builder.Services.AddHttpContextAccessor();
 
         builder.Services.AddScoped<IProductsRepo, ProductsRepo>();
         builder.Services.AddScoped<IProductsManager, ProductsManager>();
+        builder.Services.AddScoped<ICatalogsRepo, CatalogsRepo>();
+        builder.Services.AddScoped<ICatalogsManager, CatalogsManager>();  
 
         var app = builder.Build();
 

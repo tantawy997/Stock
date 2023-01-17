@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace DAL.repos.CatalogRepo;
 
-public class CatalogRepo: GenricRepo<Catalog>, ICatalogRepo
+public class CatalogsRepo: GenricRepo<Catalog>, ICatalogsRepo
 {
     private readonly AppdbContext context;
 
-    public CatalogRepo(AppdbContext _context) : base(_context)
+    public CatalogsRepo(AppdbContext _context) : base(_context)
     { 
         context = _context;
     }
