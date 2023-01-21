@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stock", "Stock\Stock.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{DCD85625-B9E0-4895-BEC0-5A83447D7D56}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BL", "BL\BL.csproj", "{DAD299C8-DE79-43E5-92EC-66A4A5725700}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BL", "BL\BL.csproj", "{DAD299C8-DE79-43E5-92EC-66A4A5725700}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

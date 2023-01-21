@@ -14,7 +14,9 @@ public class AppdbContext : DbContext
     public DbSet<Products> Products { get; set; } = null!;
 
     public DbSet<ProductDetails> ProductDetails { get; set; } = null!;
-    public DbSet<Catalog> Catalogs { get; set; } = null!;
+    public DbSet<Catalogs> Catalogs { get; set; } = null!;
+
+    //public DbSet<Photos> Photos { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder ModelBuilder)
     {

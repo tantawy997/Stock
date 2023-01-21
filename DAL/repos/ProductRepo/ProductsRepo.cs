@@ -1,4 +1,7 @@
-﻿using DAL.repos.GenricRepo;
+﻿using DAL.Models;
+using DAL.repos.GenricRepo;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Stock.Context;
 using Stock.Models;
 using System;
@@ -19,8 +22,48 @@ public class ProductsRepo : GenricRepo<Products>, IProductsRepo
         context = _context;
     }
 
-    //public List<Products> GetProductsWithCatalogs()
-    //{
-    //    return context.Products.ToList();
-    //}
+    public List<Products> getproductswithcatalogs()
+    {
+        return context.Products.Include(a => a.Catalogs).ToList();
+    }
+
+
+
+    public void addDetails(ProductDetails details)
+    {
+        context.ProductDetails.Include(a => a.Products).ToList().Add(details);
+
+    }
+
+    public ProductDetails? GetProductDetails(Guid id)
+    {
+        return context.ProductDetails.FirstOrDefault(p => p.Id == id);
+    }
+
+
+    public string UploadPhoto(IFormFile file)
+    {
+        try
+        {
+            var Prod = new Products();
+
+            // getting file original name
+            Prod.Photo = file.FileName;
+
+            // combining GUID to create unique name before saving in wwwroot
+            string uniqueFileName = Guid.NewGuid().ToString() + "_" + Prod.Photo;
+
+            // getting full path inside wwwroot/images
+            var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/", Prod.Photo);
+
+            // copying file
+            file.CopyTo(new FileStream(imagePath, FileMode.Create));
+
+            return "File Uploaded Successfully";
+        }
+        catch (Exception ex)
+        {
+            return ex.Message;
+        }
+    }
 }

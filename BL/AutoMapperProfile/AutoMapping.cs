@@ -8,6 +8,7 @@ using AutoMapper;
 using BL.DTOs.Product;
 using DAL.Models;
 using BL.DTOs.Catalog;
+using BL.DTOs;
 
 namespace BL.AutoMapperProfile;
 
@@ -22,6 +23,10 @@ public class AutoMapping : Profile
 
         CreateMap<Products, ProductsDTO>().ReverseMap();
 
-        CreateMap<Catalog, CatalogDTO>().ReverseMap();
+        CreateMap<Catalogs, CatalogDTO>().ReverseMap();
+
+        CreateMap<Products, ProductDetailsDTO>().ReverseMap();
+
+        CreateMap<Products, AllProducts>().ReverseMap();
     }    
 }

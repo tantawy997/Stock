@@ -18,11 +18,10 @@ namespace DAL.Models
         public string DefualtStock { get; set; } = "";
 
         
-        public float SalesPrice { get; set; }
+        public float SalesPrice { get; set; } 
 
         public float PurchasePrice { get; set; }
 
-        [NotMapped]
         public Products Products { get; set; } = new Products();
     }
 }

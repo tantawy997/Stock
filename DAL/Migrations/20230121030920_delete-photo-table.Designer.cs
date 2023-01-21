@@ -12,8 +12,8 @@ using Stock.Context;
 namespace DAL.Migrations
 {
     [DbContext(typeof(AppdbContext))]
-    [Migration("20230114225011_fix")]
-    partial class fix
+    [Migration("20230121030920_delete-photo-table")]
+    partial class deletephototable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -53,38 +53,17 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Catalogs");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("0f8203f3-8717-4cdf-bf1f-588fbc13971d"),
-                            Name = "John"
-                        },
-                        new
-                        {
-                            Id = new Guid("1fc5acb3-fcd0-45f2-b3ea-62e006eeab0c"),
-                            Name = "James"
-                        },
-                        new
-                        {
-                            Id = new Guid("27880c8b-a53e-411b-a29b-328bf56905c2"),
-                            Name = "Anderson"
-                        });
                 });
 
             modelBuilder.Entity("DAL.Models.ProductDetails", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("DefualtStock")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
-
-                    b.Property<Guid?>("ProductsId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<float>("PurchasePrice")
                         .HasColumnType("real");
@@ -94,8 +73,6 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductsId");
-
                     b.ToTable("ProductDetails");
                 });
 
@@ -104,6 +81,10 @@ namespace DAL.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Photo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("description")
                         .IsRequired()
@@ -115,44 +96,13 @@ namespace DAL.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("photo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("type")
-                        .IsRequired()
+                    b.Property<bool>("type")
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
                     b.ToTable("Products");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("6c55a09c-bcc3-488d-9814-b43fc445dc1d"),
-                            description = "",
-                            name = "Cold",
-                            photo = "",
-                            type = "out of stock"
-                        },
-                        new
-                        {
-                            Id = new Guid("3cf3091e-485a-40b6-b4fd-b4ea2d730d63"),
-                            description = "",
-                            name = "Stress",
-                            photo = "",
-                            type = "out of stock"
-                        },
-                        new
-                        {
-                            Id = new Guid("83dff502-7c7d-4f27-83ed-d2eb25cbb3c6"),
-                            description = "",
-                            name = "Headache",
-                            photo = "",
-                            type = "out of stock"
-                        });
                 });
 
             modelBuilder.Entity("CatalogProducts", b =>
@@ -172,9 +122,13 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Models.ProductDetails", b =>
                 {
-                    b.HasOne("Stock.Models.Products", null)
+                    b.HasOne("Stock.Models.Products", "Products")
                         .WithMany("ProductDetails")
-                        .HasForeignKey("ProductsId");
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Stock.Models.Products", b =>

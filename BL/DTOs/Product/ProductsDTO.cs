@@ -1,4 +1,6 @@
-﻿using DAL.Models;
+﻿using BL.DTOs.Catalog;
+using DAL.Models;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,13 +13,18 @@ namespace BL.DTOs.Product;
 
 public class ProductsDTO
 {
-    public Guid id { get; set; } 
-    public string name { get; set; } = "";
+    public Guid id { get; set; }
 
-    public string photo { get; set; } = "";
+    [Required]
+
+    public string name { get; set; } = "";
+    public string Photo { get; set; } = "";
 
     public string description { get; set; } = "";
     [Required]
-    public string type { get; set; } = "out of stock";
+    public Boolean type { get; set; } = false;
+
+    public ICollection<ProductDetails> ProductDetails { get; set; } = new HashSet<ProductDetails>();
+    public ICollection<Catalogs> Catalogs { get; set; } = new HashSet<Catalogs>();
 
 }

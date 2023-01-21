@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
+using BL.DTOs;
 using BL.DTOs.Product;
+using DAL.Models;
 using DAL.repos.ProductRepo;
+using Microsoft.AspNetCore.Http;
 using Stock.Models;
 using System;
 using System.Collections.Generic;
@@ -27,21 +30,11 @@ public class ProductsManager : IProductsManager
         var pr = Mapper.Map<Products>(Product);
         
         pr.Id = Guid.NewGuid();
+        //pr.Photos.
+
         productRepo.AddEntity(pr);
         productRepo.saveChange();
         return Mapper.Map<ProductsDTO>(pr);
-
-    }
-    public ProductsDTO AddProduct(ProductAddDTOs product)
-    {
-       var ProductToAdd =  Mapper.Map<ProductAddDTOs, Products>(product);
-        ProductToAdd.Id = Guid.NewGuid();
-        productRepo.AddEntity(ProductToAdd);
-
-        productRepo.saveChange();
-
-        return Mapper.Map<Products,ProductsDTO>(ProductToAdd);
-
 
     }
 
@@ -61,11 +54,11 @@ public class ProductsManager : IProductsManager
 
     }
 
-    public List<ProductsDTO> GetAll()
+    public List<AllProducts> GetAll()
     {
         var AllProducts =  productRepo.GetAll();
 
-        return Mapper.Map<List<ProductsDTO>>(AllProducts);
+        return Mapper.Map<List<AllProducts>>(AllProducts);
         
     }
 
@@ -90,4 +83,16 @@ public class ProductsManager : IProductsManager
 
         return true;
     }
+
+    public ProductDetails GetProductDetails(Guid id)
+    {
+        //var prod = Mapper.Map<Products>(product);
+
+        var product = productRepo.GetProductDetails(id);
+        return Mapper.Map<ProductDetails>(product);
+
+        
+    }
+
+    
 }

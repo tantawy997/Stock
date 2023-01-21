@@ -62,7 +62,7 @@ public class CatalogsManager : ICatalogsManager
         {
             return false;
         }
-        var mapped = mapper.Map<CatalogDTO, Catalog>(catalog);
+        var mapped = mapper.Map<CatalogDTO, Catalogs>(catalog);
         catalogRepo.Update(mapped);
         catalogRepo.saveChange();
         return true;
@@ -71,7 +71,7 @@ public class CatalogsManager : ICatalogsManager
 
     public CatalogDTO AddCatalog(CatalogAddDTOs catalog)
     {
-        var row = mapper.Map<Catalog>(catalog);
+        var row = mapper.Map<Catalogs>(catalog);
         row.Id = Guid.NewGuid();
 
         catalogRepo.AddEntity(row);

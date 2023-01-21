@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DAL.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -15,6 +16,10 @@ public class ProductAddDTOs
 
     public string description { get; set; } = "";
     [Required]
-    public string type { get; set; } = "out of stock";
+    public Boolean type { get; set; } = false;
+
+    public ICollection<ProductDetails> ProductDetails { get; set; } = new HashSet<ProductDetails>();
+    public ICollection<Catalogs> Catalogs { get; set; } = new HashSet<Catalogs>();
+
 
 }

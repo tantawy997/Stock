@@ -1,5 +1,7 @@
-﻿using BL.DTOs.Product;
+﻿using BL.DTOs;
+using BL.DTOs.Product;
 using BL.ProductsManager;
+using DAL.Models;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,36 +16,50 @@ namespace Stock.Controllers
     {
         private readonly IProductsManager Context;
 
-        public ProductsController(IProductsManager _context) 
+        public ProductsController(IProductsManager _context)
         {
             Context = _context;
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<ProductsDTO>> GetAllProducts()
+        public ActionResult<IEnumerable<AllProducts>> GetAllProducts()
         {
-            return Ok(Context.GetAll());
+            var all = Context.GetAll();
+
+            return Ok(all);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<ProductsDTO> GetProduct(Guid id) 
+        public ActionResult<Products> GetProduct(Guid product)
         {
-            var row = Context.Get(id);
-            if (row == null)
+            var rowId = Context.Get(product);
+            if (rowId == null)
             {
                 return NotFound();
             }
 
-            return Ok(row);
+            //var row = Context.GetProductDetails(product);
+
+            return Ok(new
+            {
+                id = rowId.id,
+                name = rowId.name,
+                photo = rowId.Photo,
+                description = rowId.description,
+                type = rowId.type
+            });
+
+
         }
 
 
         [HttpPut("{id}")]
-        public ActionResult<ProductsDTO> UpdateProduct(ProductsDTO product) 
+        public ActionResult<ProductsDTO> UpdateProduct(ProductsDTO product)
         {
-            
+
             return Ok(Context.update(product));
         }
+
         [HttpDelete("{id}")]
         public IActionResult DeleteProduct(Guid id)
         {
@@ -53,19 +69,31 @@ namespace Stock.Controllers
             {
                 return NotFound();
             }
-             Context.Delete(id);
+            Context.Delete(id);
 
-            return Ok();
+            return Ok(RowID);
         }
 
         [HttpPost]
-        public ActionResult<ProductsDTO> AddProductTwo(ProductAddDTOs products)
+        public ActionResult<ProductsDTO> AddProduct(ProductAddDTOs products)
         {
-            var row = Context.AddProd(products);
             
+            if (products == null)
+            {
+                return Content("Invalid info");
+            }
 
-            return Ok(new {id = row.id,name = row.name, photo = row.photo,
-                description = row.description, type = row.type});
+            var row = Context.AddProd(products);
+
+
+            return Ok(new { id = row.id, name = row.name,photo = row.Photo, 
+                description = row.description, type = row.type });
+        }
+
+        [HttpPost("photo")]
+        public string UploadImage([FromForm] IFormFile file)
+        {
+            return "";
         }
     }
 }

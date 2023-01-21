@@ -12,8 +12,8 @@ using Stock.Context;
 namespace DAL.Migrations
 {
     [DbContext(typeof(AppdbContext))]
-    [Migration("20230116005922_productDetailsForeignKey")]
-    partial class productDetailsForeignKey
+    [Migration("20230121030405_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -55,6 +55,32 @@ namespace DAL.Migrations
                     b.ToTable("Catalogs");
                 });
 
+            modelBuilder.Entity("DAL.Models.Photos", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ProductsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductsId");
+
+                    b.ToTable("Photos");
+                });
+
             modelBuilder.Entity("DAL.Models.ProductDetails", b =>
                 {
                     b.Property<Guid>("Id")
@@ -92,14 +118,9 @@ namespace DAL.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("photo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("type")
-                        .IsRequired()
+                    b.Property<bool>("type")
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -121,6 +142,17 @@ namespace DAL.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("DAL.Models.Photos", b =>
+                {
+                    b.HasOne("Stock.Models.Products", "Products")
+                        .WithMany("Photos")
+                        .HasForeignKey("ProductsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Products");
+                });
+
             modelBuilder.Entity("DAL.Models.ProductDetails", b =>
                 {
                     b.HasOne("Stock.Models.Products", "Products")
@@ -134,6 +166,8 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("Stock.Models.Products", b =>
                 {
+                    b.Navigation("Photos");
+
                     b.Navigation("ProductDetails");
                 });
 #pragma warning restore 612, 618

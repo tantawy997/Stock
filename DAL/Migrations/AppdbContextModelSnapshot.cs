@@ -22,7 +22,7 @@ namespace DAL.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("CatalogProducts", b =>
+            modelBuilder.Entity("CatalogsProducts", b =>
                 {
                     b.Property<Guid>("CatalogsId")
                         .HasColumnType("uniqueidentifier");
@@ -34,10 +34,10 @@ namespace DAL.Migrations
 
                     b.HasIndex("ProductsId");
 
-                    b.ToTable("CatalogProducts", (string)null);
+                    b.ToTable("CatalogsProducts", (string)null);
                 });
 
-            modelBuilder.Entity("DAL.Models.Catalog", b =>
+            modelBuilder.Entity("DAL.Models.Catalogs", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -80,6 +80,10 @@ namespace DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Photo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("description")
                         .IsRequired()
                         .HasMaxLength(225)
@@ -90,23 +94,18 @@ namespace DAL.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("photo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("type")
-                        .IsRequired()
+                    b.Property<bool>("type")
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
                     b.ToTable("Products", (string)null);
                 });
 
-            modelBuilder.Entity("CatalogProducts", b =>
+            modelBuilder.Entity("CatalogsProducts", b =>
                 {
-                    b.HasOne("DAL.Models.Catalog", null)
+                    b.HasOne("DAL.Models.Catalogs", null)
                         .WithMany()
                         .HasForeignKey("CatalogsId")
                         .OnDelete(DeleteBehavior.Cascade)

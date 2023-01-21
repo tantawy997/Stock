@@ -1,4 +1,6 @@
-﻿using BL.DTOs.Product;
+﻿using BL.DTOs;
+using BL.DTOs.Product;
+using DAL.Models;
 using Stock.Models;
 using System;
 using System.Collections.Generic;
@@ -9,11 +11,9 @@ namespace BL.ProductsManager;
 
 public interface IProductsManager
 {
-    List<ProductsDTO> GetAll();
+    List<AllProducts> GetAll();
 
     ProductsDTO? Get(Guid id);
-
-    ProductsDTO AddProduct(ProductAddDTOs product);
 
     ProductsDTO AddProd(ProductAddDTOs product);
 
@@ -21,6 +21,5 @@ public interface IProductsManager
 
     void Delete(Guid id);
 
-    //void SaveChanges();
-
+    ProductDetails GetProductDetails(Guid id);
 }
