@@ -94,5 +94,17 @@ public class ProductsManager : IProductsManager
         
     }
 
-    
+    public ProductsDTO AddProduct(ProductAddDTOs product)
+    {
+        var file = product.file;
+        var pr = Mapper.Map<Products>(product);
+
+        pr.Id = Guid.NewGuid();
+        productRepo.UploadPhoto(file);
+
+        productRepo.AddEntity(pr);
+        productRepo.saveChange();
+        return Mapper.Map<ProductsDTO>(pr);
+    }
+
 }

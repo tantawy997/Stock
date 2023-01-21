@@ -45,16 +45,16 @@ public class ProductsRepo : GenricRepo<Products>, IProductsRepo
     {
         try
         {
-            var Prod = new Products();
+            Products p = new Products();
 
             // getting file original name
-            Prod.Photo = file.FileName;
+            p.Photo = file.FileName;
 
             // combining GUID to create unique name before saving in wwwroot
-            string uniqueFileName = Guid.NewGuid().ToString() + "_" + Prod.Photo;
+            string uniqueFileName = Guid.NewGuid().ToString() + "_" + p.Photo;
 
             // getting full path inside wwwroot/images
-            var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/", Prod.Photo);
+            var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/", p.Photo);
 
             // copying file
             file.CopyTo(new FileStream(imagePath, FileMode.Create));

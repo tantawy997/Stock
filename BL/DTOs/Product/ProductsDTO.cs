@@ -24,7 +24,9 @@ public class ProductsDTO
     [Required]
     public Boolean type { get; set; } = false;
 
-    public ICollection<ProductDetails> ProductDetails { get; set; } = new HashSet<ProductDetails>();
-    public ICollection<Catalogs> Catalogs { get; set; } = new HashSet<Catalogs>();
+    public IFormFile file { get; set; } 
+
+    //public ICollection<ProductDetails> ProductDetails { get; set; } = new HashSet<ProductDetails>();
+    //public ICollection<Catalogs> Catalogs { get; set; } = new HashSet<Catalogs>();
 
 }

@@ -1,6 +1,7 @@
 ﻿using BL.DTOs;
 using BL.DTOs.Product;
 using DAL.Models;
+using Microsoft.AspNetCore.Http;
 using Stock.Models;
 using System;
 using System.Collections.Generic;
@@ -22,4 +23,6 @@ public interface IProductsManager
     void Delete(Guid id);
 
     ProductDetails GetProductDetails(Guid id);
+
+    ProductsDTO AddProduct(ProductAddDTOs product);
 }

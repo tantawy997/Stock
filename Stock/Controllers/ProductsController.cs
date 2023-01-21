@@ -91,9 +91,25 @@ namespace Stock.Controllers
         }
 
         [HttpPost("photo")]
-        public string UploadImage([FromForm] IFormFile file)
+        public ActionResult<ProductsDTO> CreateProduct([FromForm] ProductAddDTOs product)
         {
-            return "";
+            if (product == null)
+            {
+                return Content("Invalid info");
+            }
+
+            var row = Context.AddProduct(product);
+
+
+            return Ok(new
+            {
+                id = row.id,
+                name = row.name,
+                photo = row.Photo,
+                description = row.description,
+                type = row.type
+            });
         }
+
     }
 }
