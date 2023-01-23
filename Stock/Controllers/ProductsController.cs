@@ -115,7 +115,7 @@ namespace Stock.Controllers
         {
             if (model != null)
             {
-                var row =Context.UploadPhoto(model);
+                var row = Context.UploadPhoto(model);
                 return Ok(row);
             }
             else
