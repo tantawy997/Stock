@@ -33,5 +33,8 @@ public class AppdbContext : DbContext
 
         ModelBuilder.Entity<ProductDetails>().HasOne(a => a.Products).WithMany(e =>e.ProductDetails)
             .HasPrincipalKey(f => f.Id).HasForeignKey(a => a.Id);
+
+        //ModelBuilder.Entity<Photos>().HasOne(a => a.products).WithMany(e => e.Photos)
+        //    .HasPrincipalKey(f => f.Id).HasForeignKey(a => a.Id);
     }
 }

@@ -19,5 +19,6 @@ public interface IProductsRepo : IGenricRepo<Products>
     public ProductDetails? GetProductDetails(Guid id);
 
     public string UploadPhoto(IFormFile file);
+    public string GetPhoto(IFormFile file);
 
 }

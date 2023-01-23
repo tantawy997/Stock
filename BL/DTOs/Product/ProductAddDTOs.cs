@@ -16,10 +16,11 @@ public class ProductAddDTOs
     public string photo { get; set; } = "";
 
     public string description { get; set; } = "";
-    [Required]
     public Boolean type { get; set; } = false;
 
-    public IFormFile file { get; set; }
+    public IFormFile file { get; set; } 
+
+
     //public ICollection<ProductDetails> ProductDetails { get; set; } = new HashSet<ProductDetails>();
     //public ICollection<Catalogs> Catalogs { get; set; } = new HashSet<Catalogs>();
 

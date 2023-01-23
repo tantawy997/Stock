@@ -50,6 +50,7 @@ public class ProductsManager : IProductsManager
     {
         var row = productRepo.getById(id);
 
+        //row.Photo = productRepo.GetPhoto()
         return Mapper.Map<ProductsDTO>(row);
 
     }
@@ -57,7 +58,7 @@ public class ProductsManager : IProductsManager
     public List<AllProducts> GetAll()
     {
         var AllProducts =  productRepo.GetAll();
-
+        
         return Mapper.Map<List<AllProducts>>(AllProducts);
         
     }
@@ -100,11 +101,23 @@ public class ProductsManager : IProductsManager
         var pr = Mapper.Map<Products>(product);
 
         pr.Id = Guid.NewGuid();
-        productRepo.UploadPhoto(file);
 
+        pr.Photo = productRepo.UploadPhoto(file);
+        
         productRepo.AddEntity(pr);
         productRepo.saveChange();
         return Mapper.Map<ProductsDTO>(pr);
     }
-
+    public string UploadPhoto(ImageDTO model)
+    {
+        var file = model.file;
+        
+       var row =  Mapper.Map<ImageDTO, Products>(model);
+        row.Id = Guid.NewGuid();
+        
+        //row.Id = Guid.NewGuid();
+       
+       var photo =  productRepo.UploadPhoto(file);
+        return photo;   
+    }
 }

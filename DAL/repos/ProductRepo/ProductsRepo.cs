@@ -45,25 +45,57 @@ public class ProductsRepo : GenricRepo<Products>, IProductsRepo
     {
         try
         {
-            Products p = new Products();
+            //Products pr = new Products();
 
             // getting file original name
-            p.Photo = file.FileName;
+            string photo = file.FileName;
 
             // combining GUID to create unique name before saving in wwwroot
-            string uniqueFileName = Guid.NewGuid().ToString() + "_" + p.Photo;
+            string uniqueFileName = Guid.NewGuid().ToString() + "_" + photo;
+             
 
             // getting full path inside wwwroot/images
-            var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/", p.Photo);
+            var imagePath = Path.Combine(@"./wwwroot/images/", uniqueFileName);
 
             // copying file
+
             file.CopyTo(new FileStream(imagePath, FileMode.Create));
 
-            return "File Uploaded Successfully";
+            return $"/images/{uniqueFileName}";
+        }
+
+        catch (Exception ex)
+        {
+            return ex.Message;
+        }
+
+        
+    }
+    public string GetPhoto(IFormFile file)
+    {
+        try
+        {
+            //Products pr = new Products();
+
+            // getting file original name
+            var Photo = file.FileName;
+
+            // combining GUID to create unique name before saving in wwwroot
+            string uniqueFileName = Guid.NewGuid().ToString() + "_" + Photo.Trim();
+            string photoToView = $"/images/{uniqueFileName}";
+            // getting full path inside wwwroot/images
+            var imagePath = Path.Combine(@"wwwroot/images/", uniqueFileName).Trim();
+
+            // copying file
+            file.CopyTo(new FileStream(imagePath, FileMode.Open));
+
+            return photoToView;
         }
         catch (Exception ex)
         {
             return ex.Message;
         }
     }
+     
+
 }

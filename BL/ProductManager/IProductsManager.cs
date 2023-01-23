@@ -25,4 +25,6 @@ public interface IProductsManager
     ProductDetails GetProductDetails(Guid id);
 
     ProductsDTO AddProduct(ProductAddDTOs product);
+
+    public string UploadPhoto(ImageDTO model);
 }

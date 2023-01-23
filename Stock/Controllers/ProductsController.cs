@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Stock.Models;
+using System.Diagnostics;
 
 namespace Stock.Controllers
 {
@@ -75,7 +76,7 @@ namespace Stock.Controllers
         }
 
         [HttpPost]
-        public ActionResult<ProductsDTO> AddProduct(ProductAddDTOs products)
+        public ActionResult<ProductsDTO> AddProduct([FromForm] ProductAddDTOs products)
         {
             
             if (products == null)
@@ -90,26 +91,37 @@ namespace Stock.Controllers
                 description = row.description, type = row.type });
         }
 
-        [HttpPost("photo")]
+        [HttpPost("Add")]
         public ActionResult<ProductsDTO> CreateProduct([FromForm] ProductAddDTOs product)
         {
-            if (product == null)
+            if (product != null)
             {
-                return Content("Invalid info");
+
+                var row = Context.AddProduct(product);
+
+
+                return Ok(row);
+            }
+            else
+            {
+                return Content("model is null");
             }
 
-            var row = Context.AddProduct(product);
 
-
-            return Ok(new
-            {
-                id = row.id,
-                name = row.name,
-                photo = row.Photo,
-                description = row.description,
-                type = row.type
-            });
         }
 
+        [HttpPost("photo")]
+        public ActionResult<string> UploadPhoto([FromForm] ImageDTO model)
+        {
+            if (model != null)
+            {
+                var row =Context.UploadPhoto(model);
+                return Ok(row);
+            }
+            else
+            {
+                return Content("model is null");
+            }
+        }
     }
 }
