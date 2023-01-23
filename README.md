@@ -6,6 +6,5 @@ this project has three entities [Products, Catalogs, ProductDetails]
 - ProductsDetails has a weak relationship with Products
 
 - I am using for this Project Repository design Pattern, autoMapper, dependency injection, EntityFrameWork, Linq.
-- for the frontned Side I will be using Angular framework 
 
-- frontend side: https://github.com/tantawy997/StockAngular
+- frontend side(Angular): https://github.com/tantawy997/StockAngular
