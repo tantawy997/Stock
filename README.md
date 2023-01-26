@@ -7,4 +7,4 @@ this project has three entities [Products, Catalogs, ProductDetails]
 
 - I am using for this Project Repository design Pattern, autoMapper, dependency injection, EntityFrameWork, Linq.
 
-- frontend side(Angular): https://github.com/tantawy997/StockAngular
+- frontend side(Angular): https://github.com/tantawy997/AngularStock
