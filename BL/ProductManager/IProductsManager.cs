@@ -26,5 +26,7 @@ public interface IProductsManager
 
     ProductsDTO AddProduct(ProductAddDTOs product);
 
-    public string UploadPhoto(ImageDTO model);
+    ProductsDTO AddProductv2(ProductAddDTOv2 product);
+
+
 }

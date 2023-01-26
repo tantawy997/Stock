@@ -18,7 +18,7 @@ public class ProductAddDTOs
     public string description { get; set; } = "";
     public Boolean type { get; set; } = false;
 
-    public IFormFile file { get; set; } 
+    public IFormFile? image { get; set; } 
 
 
     //public ICollection<ProductDetails> ProductDetails { get; set; } = new HashSet<ProductDetails>();

@@ -97,7 +97,7 @@ public class ProductsManager : IProductsManager
 
     public ProductsDTO AddProduct(ProductAddDTOs product)
     {
-        var file = product.file;
+        var file = product.image;
         var pr = Mapper.Map<Products>(product);
 
         pr.Id = Guid.NewGuid();
@@ -108,16 +108,31 @@ public class ProductsManager : IProductsManager
         productRepo.saveChange();
         return Mapper.Map<ProductsDTO>(pr);
     }
-    public string UploadPhoto(ImageDTO model)
+    public ProductsDTO AddProductv2( ProductAddDTOv2 product)
     {
-        var file = model.file;
-        
-       var row =  Mapper.Map<ImageDTO, Products>(model);
-        row.Id = Guid.NewGuid();
-        
-        //row.Id = Guid.NewGuid();
-       
-       var photo =  productRepo.UploadPhoto(file);
-        return photo;   
+        var prod = Mapper.Map<ProductAddDTOv2, Products>(product);
+        prod.Id = Guid.NewGuid();
+
+        var filePathName = @"wwwroot/images/" + Path.GetFileNameWithoutExtension(product.FileName) + "-" +
+        DateTime.Now.ToString().Replace("/", "").Replace(":", "").Replace(" ", "") +
+        Path.GetExtension(product.FileName);
+        prod.Photo = filePathName;
+
+
+        if (product.FileAsBase64.Contains(","))
+        {
+            product.FileAsBase64 = product.FileAsBase64.Substring(product.FileAsBase64.IndexOf(",") + 1);
+        }
+        product.FileAsByteArray = Convert.FromBase64String(product.FileAsBase64);
+
+        using (var fs = new FileStream(filePathName, FileMode.CreateNew))
+        {
+            fs.Write(product.FileAsByteArray, 0, product.FileAsByteArray.Length);
+        }
+
+        productRepo.AddEntity(prod);
+
+        return Mapper.Map<ProductsDTO>(product);
+
     }
 }

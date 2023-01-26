@@ -109,13 +109,15 @@ namespace Stock.Controllers
 
 
         }
-
-        [HttpPost("photo")]
-        public ActionResult<string> UploadPhoto([FromForm] ImageDTO model)
+        [HttpPost("addv2")]
+        public ActionResult<ProductsDTO> CreateProductv2([FromForm] ProductAddDTOv2 product)
         {
-            if (model != null)
+            if (product != null)
             {
-                var row = Context.UploadPhoto(model);
+
+                var row = Context.AddProductv2(product);
+
+
                 return Ok(row);
             }
             else

@@ -29,7 +29,7 @@ public class AutoMapping : Profile
 
         CreateMap<Products, AllProducts>().ReverseMap();
 
-        CreateMap<ImageDTO, Products>().ReverseMap();
+        CreateMap<ProductAddDTOv2, Products>().ReverseMap();
         
     }    
 }
